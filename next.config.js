@@ -2,7 +2,7 @@
 const nextConfig = {
 
     images : {
-       domains : ["media.kitsu.io"]  
+       domains : ["media.kitsu.io","repository-images.githubusercontent.com"]  
     }
 }
 

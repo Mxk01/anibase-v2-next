@@ -35,3 +35,9 @@ body {
   align-items: center;
   padding:1.2rem;
 }
+
+form {
+  background-color: aliceblue;
+  padding:45px;
+  border-radius: 15px;
+}

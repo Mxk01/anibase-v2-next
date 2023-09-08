@@ -5,7 +5,7 @@ export const GET = async () => {
   try {
     await prisma.$connect();
     let users = await prisma.user.findMany();
-    return NextResponse.json({users},{status:200});
+    return NextResponse.json({message:users},{status:200});
   }
   catch(e)
   {

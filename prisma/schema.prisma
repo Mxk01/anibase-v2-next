@@ -14,3 +14,12 @@ model User {
   hashedPassword String?
 }
 
+model Anime {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title  String @unique
+  ranking String?
+  image String
+  addedBy String
+}
+
+
