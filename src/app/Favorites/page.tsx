@@ -1,51 +1,49 @@
-'use client'
-import React, { useState, useEffect } from 'react';
+"use client"
+import useSWR,{mutate} from 'swr';
+import {useState} from 'react'
+import { useSession } from 'next-auth/react';
 import Nav from '../components/Nav';
+import Image from 'next/image';
 
 function Page() {
-  const [animeData, setAnimeData] = useState(null); // State to store anime data
+  const { data, status } = useSession();
+  const userEmail = status=="authenticated" && data.user.email;
+   let [page,setPage] = useState(1);
+  const { data: animeData, error } = useSWR(`/api/favorites/animes/${userEmail}?page=${page}`, async (url) => {
+    const response = await fetch(url, { method: 'GET' });
 
-  useEffect(() => {
-    // Define the fetch function and call it inside useEffect
-    const getAnime = () => {
-      const requestOptions = {
-        method: 'GET',
-      };
-
-      fetch('/api/favorites/animes', requestOptions)
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          } else {
-            throw new Error('GET anime request failed');
-          }
-        })
-        .then(data => {
-          // Set the animeData state with the fetched data
-          setAnimeData(data);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    };
-
-    // Call the fetch function when the component mounts
-    getAnime();
-  }, []); // Empty dependency array means this effect runs once, like componentDidMount
+    if (!response.ok) {
+      throw new Error('GET anime request failed');
+    }
+    mutate('/api/favorites/animes/[email]')
+    return response.json();
+    
+  });
 
   return (
     <div>
-      <Nav />
-      {animeData ? (
-        // Render the animeData if it's available
-        <div>
-          <h1>Anime Data</h1>
-          <pre>{JSON.stringify(animeData, null, 2)}</pre>
-        </div>
-      ) : (
-        // Render a loading message or some other UI while fetching
-        <p>Loading anime data...</p>
-      )}
+      <Nav></Nav>
+      <div className="grid grid-cols-1 md:grid-cols-2 mt-8 lg:grid-cols-3 gap-4 p-4">
+        {error ? (
+          <p>Error loading anime data...</p>
+        ) : !animeData ? (
+          <p>Loading anime data...</p>
+        ) : (
+          animeData.myAnime.map(anime => (
+            <div className="rounded-lg p-2 shadow-md" key={anime.id}>
+              <h2 className="text-lg font-semibold mb-2">{anime.title}</h2>
+              <p>Ranking: {anime.ranking || 'N/A'}</p>
+              <Image src={anime.image} width={300} height={300} alt={anime.title} className="mt-2 rounded" />
+            </div>
+          ))
+        )}
+      </div>
+      { animeData &&
+      <div className='flex justify-evenly'>  
+      <button className='bg-red-500 p-4'>Previous</button>
+      <button className='bg-red-500 p-4'>Next</button>
+      </div>
+      }
     </div>
   );
 }

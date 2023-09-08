@@ -34,7 +34,6 @@ export const POST = async (req:Request) =>
    }
   }
   catch(e){
-    console.log(e)
     return NextResponse.json({message:"Internal Error"},{status:500});
 
   }

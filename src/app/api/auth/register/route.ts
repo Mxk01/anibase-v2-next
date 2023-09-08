@@ -6,14 +6,19 @@ export const POST = async (req:Request) =>
 {
   try {
    const {name,email,password} = await  req.json();
-   const hashedPassword = await bcrypt.hash(password,10);
    if(!name || !email || !password) return NextResponse.json({message:"Invalid data"},{status:422});
-   await connectToDB(); 
+   const hashedPassword = await bcrypt.hash(password,10);
+    await connectToDB(); 
+    const userExists = await prisma.user.findUnique({where : {email}});
+    if(!userExists) {
    const newUser = await prisma.user.create({data:{email,name,hashedPassword}});
    return NextResponse.json({newUser},{status:200});
+    }
+    else {
+      return NextResponse.json({message:"User already exists"},{status:409});
+    }
   }
   catch(e){
-    console.log(e)
     return NextResponse.json({message:"Internal Error"},{status:500});
 
   }

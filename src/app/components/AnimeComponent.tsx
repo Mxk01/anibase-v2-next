@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState, useEffect, memo } from 'react';
+import { useState, useEffect, memo,useCallback } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import useSWR from 'swr';
 
@@ -15,12 +15,12 @@ function AnimeComponent({ category,userData }) {
     `${url}`,
     fetcher
   );
-  const handleItemClick = (animeId) => {
+  const handleItemClick = useCallback((animeId) => {
     setSelectedItems((prevSelectedItems) => ({
       ...prevSelectedItems,
       [animeId]: !prevSelectedItems[animeId],
     }));
-  };
+  },[]);
 
   const addItemToFavorite = (item) => {
     
@@ -36,7 +36,6 @@ function AnimeComponent({ category,userData }) {
                   else { throw new Error('POST request failed');
     }
   }).then(data => {
-    console.log('Response data:', data);
   }).catch(error => {
     console.error('Error:', error);
   });
@@ -72,7 +71,7 @@ function AnimeComponent({ category,userData }) {
                   ></Image>
                   <div
                     className={`absolute inset-0 flex items-center flex-col cursor-default justify-center opacity-0 hover:opacity-100 transition-opacity ${
-                      isSelected ? 'bg-black bg-opacity-30' : ''
+                      isSelected ? 'bg-black bg-opacity-60' : ''
                     }`}
                   >
                     <h1 className="text-2xl font-bold text-center mb-2 select-all text-white">

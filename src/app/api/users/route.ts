@@ -9,7 +9,6 @@ export const GET = async () => {
   }
   catch(e)
   {
-    console.log(e);
     return NextResponse.json({message:"Couldn't find users!"},{status:404})
   }
 }

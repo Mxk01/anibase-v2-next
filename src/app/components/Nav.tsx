@@ -32,9 +32,7 @@ export default function Nav() {
             <span className="block truncate text-sm font-medium">{data.user.email}</span>
           
           </Dropdown.Header>
-          <Navbar.Link className="text-center cursor-pointer">
-            Dashboard
-          </Navbar.Link>
+       
           <Navbar.Link className="text-center cursor-pointer">
             Settings
           </Navbar.Link>
@@ -46,7 +44,6 @@ export default function Nav() {
               });
             }
             catch(e) {
-              console.log(e.message)
             }
           
           }}>
