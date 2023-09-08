@@ -3,16 +3,35 @@ import { NextResponse } from "next/server";
 import prisma from "../../../../../prisma";
 export const POST = async (req:Request) =>
 {
+  type BodyType = {
+    title: string, 
+    ranking:number,
+    image:string,
+    addedBy:string
+  }
   try {
-   const {title,ranking,image,addedBy} = await  req.json();
+   const {title,ranking,image,addedBy}:BodyType = await  req.json();
    await connectToDB(); 
-   // adding anime 
+
+ 
+  const animeExists = await prisma.anime.findFirst({
+    where: {
+     title
+    },
+  })
+
+   if(!animeExists) {
+      // adding anime 
    const addedAnime = await prisma.anime.create({data:
     {
     title,ranking,image,addedBy
     }
   });
    return NextResponse.json({addedAnime},{status:200});
+   }
+   else {
+    return NextResponse.json({error:"This anime has been already added!"},{status:409});
+   }
   }
   catch(e){
     console.log(e)

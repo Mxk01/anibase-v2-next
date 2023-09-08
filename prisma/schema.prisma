@@ -16,8 +16,8 @@ model User {
 
 model Anime {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  title  String @unique
-  ranking String?
+  title  String 
+  ranking Int?
   image String
   addedBy String
 }

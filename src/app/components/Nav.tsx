@@ -1,6 +1,7 @@
 import { signOut, useSession } from "next-auth/react";
 import { Dropdown, Navbar,Avatar } from 'flowbite-react';
 import {useRouter} from 'next/navigation'
+import Link from "next/link";
 export default function Nav() {
   let {data,status} = useSession();
   let router = useRouter();
@@ -66,7 +67,7 @@ export default function Nav() {
             Home
           </p>
         </Navbar.Link>
-        <Navbar.Link href="#">
+        <Navbar.Link href="/favorites">
           Favorites
         </Navbar.Link>
       </Navbar.Collapse>

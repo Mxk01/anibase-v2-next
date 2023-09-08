@@ -1,5 +1,3 @@
-'use client'
-import { Irish_Grover } from 'next/font/google';
 import Image from 'next/image';
 import { useState, useEffect, memo } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
