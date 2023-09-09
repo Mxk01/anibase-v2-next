@@ -14,9 +14,9 @@ import { useRouter } from "next/navigation"
 
 }
 export default  function Page() {
-  let [name,setName] = useState("");
-  let [email,setEmail] = useState("");
-  let [password,setPassword] = useState("");
+  let [name,setName] = useState<string>("");
+  let [email,setEmail] = useState<string>("");
+  let [password,setPassword] = useState<string>("");
   let router = useRouter(); 
 
   return (

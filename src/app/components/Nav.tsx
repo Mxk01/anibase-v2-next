@@ -13,11 +13,11 @@ export default function Nav() {
       className="dark:bg-blue-400"
       rounded
     >
-      <Navbar.Brand href="/">
+      <Link href="/">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           - Anibase  
         </span>
-      </Navbar.Brand>
+      </Link>
       {status == "authenticated" &&
       <div className="flex md:order-2">
         <Dropdown
@@ -56,17 +56,12 @@ export default function Nav() {
       </div>      }
 
       <Navbar.Collapse>
-        <Navbar.Link
-          active
-          href="#"
-        >
-          <p>
-            Home
-          </p>
-        </Navbar.Link>
-        <Navbar.Link href="/favorites">
+      <Link href="/">
+          Home
+        </Link>
+        <Link href="/favorites">
           Favorites
-        </Navbar.Link>
+        </Link>
       </Navbar.Collapse>
     </Navbar>
     
