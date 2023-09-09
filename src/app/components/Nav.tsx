@@ -15,7 +15,7 @@ export default function Nav() {
     >
       <Navbar.Brand href="/">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Anibase  
+          - Anibase  
         </span>
       </Navbar.Brand>
       {status == "authenticated" &&
