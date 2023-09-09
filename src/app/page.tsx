@@ -6,10 +6,6 @@ import Nav from "./components/Nav";
 import type { Metadata } from 'next'
 
 
-export const metadata: Metadata = {
-  title: 'Homepage',
-  description: 'Find your favourite  animated shows here',
-}
 
 
 export default function Home() {
