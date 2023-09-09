@@ -4,9 +4,13 @@ import prisma from "../../../../../../prisma";
 
 export const GET = async (req,{params}) => {
   try {
-    console.log(req.url)
-    await connectToDB();
+    const pattern = /(?:\?|&)page=(\d+)(?![\d\D]*[?&]page=\d+)/;
+    const match = req.url.match(pattern);
 
+    await connectToDB();
+    if (match) {
+      const lastNumber = match[1];
+      console.log(lastNumber)
     const myAnime = await prisma.anime.findMany({
       where: {
         addedBy: params.email,
@@ -18,9 +22,11 @@ export const GET = async (req,{params}) => {
     } else {
       return NextResponse.json({ error: "You don't have any anime added!" }, { status: 409 });
     }
+    }
+
   } catch (e) {
     console.error(e);
-    return NextResponse.json({message:params.email }, { status: 500 });
+    return NextResponse.json({message:"Cannot get anime!" }, { status: 404 });
   } finally {
     await prisma.$disconnect();
   }
