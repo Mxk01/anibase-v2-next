@@ -7,12 +7,18 @@ function Page() {
     const email = useRef(null);
 
     const login =  async () => {
-        await signIn("credentials",{
+      try {  
+      await signIn("credentials",{
             email:email.current,
             password:password.current,
             redirect:true,
             callbackUrl:"/"
         })
+      }
+      catch(e){
+        console.log(e.message)
+      }
+        
     }
     return (
     <div className="form-container">
